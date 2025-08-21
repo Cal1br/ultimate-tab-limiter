@@ -23,5 +23,15 @@
       "32": "icons/32px.png"
     },
     "default_title": "Click to configure"
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "cal1br@ultimate-tab-limiter",
+      "strict_min_version": "109.0"
+    },
+    "gecko_android": {
+      "id": "cal1br@ultimate-tab-limiter",
+      "strict_min_version": "109.0"
+    }
   }
 }
