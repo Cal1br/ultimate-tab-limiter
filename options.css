@@ -1,0 +1,196 @@
+/* Firefox theme colors */
+:root {
+  color-scheme: light dark;
+  --bg-color: Canvas;
+  --text-color: CanvasText;
+  --accent-color: Highlight;
+  --accent-text-color: HighlightText;
+}
+
+/* General body styling */
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  font-family: 'Press Start 2P', monospace, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 2rem;
+  text-align: center;
+}
+
+/* Header */
+h2 {
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+}
+
+/* Form styling */
+label {
+  display: block;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+}
+
+input {
+  margin-left: 0.5rem;
+  padding: 0.3rem 0.5rem;
+  border: 2px solid var(--text-color);
+  border-radius: 4px;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+input:focus {
+  outline: 2px solid var(--accent-color);
+}
+
+/* Button styling */
+button {
+  padding: 0.5rem 1rem;
+  font-family: inherit;
+  font-size: 0.9rem;
+  color: var(--accent-text-color);
+  background-color: var(--accent-color);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: transform 0.1s ease-in-out;
+}
+
+button:hover {
+  transform: scale(1.05);
+}
+
+/* List styling */
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin-top: 2rem;
+  width: 50vw;
+  min-width: 400px;
+  max-width: 800px;
+}
+
+ul li {
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+  background-color: var(--bg-color);
+  border: 2px solid var(--text-color);
+  border-radius: 4px;
+  font-family: inherit;
+  transform: scale(1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+/* Animation class for new entries */
+li.new-entry {
+  animation: pop 0.4s ease forwards;
+}
+
+@keyframes pop {
+  0% {
+    transform: scale(0);
+    background-color: var(--accent-color);
+    color: var(--accent-text-color);
+  }
+  60% {
+    transform: scale(1.2);
+    background-color: var(--accent-color);
+    color: var(--accent-text-color);
+  }
+  100% {
+    transform: scale(1);
+    background-color: var(--bg-color);
+    color: var(--text-color);
+  }
+}
+
+/* Add Entry button arcade pulse */
+button#addEntryBtn:hover {
+  animation: button-pulse 1s infinite alternate;
+}
+
+/* Pulse keyframes */
+@keyframes button-pulse {
+  0% {
+    background-color: var(--accent-color);
+    color: var(--accent-text-color);
+    box-shadow: 0 0 2px var(--accent-color);
+    transform: scale(1);
+  }
+  50% {
+    background-color: var(--accent-color);
+    color: var(--accent-text-color);
+    box-shadow: 0 0 8px var(--accent-color);
+    transform: scale(1.05);
+  }
+  100% {
+    background-color: var(--accent-color);
+    color: var(--accent-text-color);
+    box-shadow: 0 0 2px var(--accent-color);
+    transform: scale(1);
+  }
+}
+
+@keyframes dissolve {
+  0% {
+    filter: brightness(1);
+    clip-path: inset(0% 0% 0% 0%);
+    opacity: 1;
+  }
+  100% {
+    filter: brightness(0);
+    clip-path: inset(100% 0% 0% 0%);
+    opacity: 0;
+  }
+}
+
+li.undertale-death {
+  animation: dissolve 0.25s steps(20) forwards;
+}
+
+.toggle {
+  background-image: 'img/switch-off.png';
+  background-size: cover;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.5s ease-in-out;
+  box-shadow: 6px 6px 10px #0000003d;
+}
+
+#checkbox:checked + .toggle {
+  background-size: cover;
+}
+
+.img-toggle {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.img-toggle input {
+  display: none; /* hide the checkbox */
+}
+
+.img-toggle .switches-img img {
+  display: none; /* hide all by default */
+}
+
+.img-toggle .switches-img img:first-child {
+  display: flex; /* show the first image (off) */
+}
+
+/* when checked, hide first image and show second */
+.img-toggle input:checked + .switches-img img:first-child {
+  display: none;
+}
+.img-toggle input:checked + .switches-img img:last-child {
+  display: flex;
+}
