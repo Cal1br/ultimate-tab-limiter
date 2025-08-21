@@ -3,7 +3,7 @@ Do you too open a hundred different _YouTube_ tabs, only to close them all later
 
 __Ultimate Tab Limiter comes to the rescue!__
 
-A Firefox addon that helps you keep your focus by limiting the number of tabs open.
+A Firefox add-on that helps you keep your focus by limiting the number of tabs open.
 
 ## Planned features
  - Typescript
