@@ -1,3 +1,5 @@
+import { getBrowser, getConfig, getOptions } from './utils.js';
+
 // Helper: check if URL matches domain or subdomain
 //todo perhaps make the entries a MAP to fascilitate faster searchings
 function matchesDomain(url, domain) {
@@ -9,22 +11,12 @@ function matchesDomain(url, domain) {
   }
 }
 
-// TODO move to utils.js
-async function getConfig() {
-  const result = await browser.storage.local.get('userConfig');
-  return result.userConfig || { entries: [] };
-}
-async function getOptions() {
-  const result = await browser.storage.local.get('userOptions');
-  return result.userOptions || { closeNewTabsToggle: true };
-}
-
 // Count all tabs for a domain
 async function getTabsForDomain(domain) {
-  return await browser.tabs.query({ url: `*://*.${domain}/*` });
+  return await getBrowser().tabs.query({ url: `*://*.${domain}/*` });
 }
 
-browser.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
+getBrowser().tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
   if (!tab.url) return;
 
   const config = await getConfig();
@@ -40,14 +32,14 @@ browser.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
         try {
           const userOptions = await getOptions();
           if (userOptions.closeNewTabsToggle) {
-            await browser.tabs.remove(tab.id);
+            await getBrowser().tabs.remove(tab.id);
           } else {
             console.log(openTabs);
             //lowest tab id is the oldest
             const lowest = openTabs.reduce((min, tab) =>
               tab.id < min.id ? tab : min
             );
-            await browser.tabs.remove(lowest.id);
+            await getBrowser().tabs.remove(lowest.id);
           }
         } catch (err) {
           console.warn('Failed to close tab:', err);
@@ -59,7 +51,7 @@ browser.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
   }
 });
 
-browser.action.onClicked.addListener(() => {
+getBrowser().action.onClicked.addListener(() => {
   // Opens the extension options page
-  browser.runtime.openOptionsPage();
+  getBrowser().runtime.openOptionsPage();
 });

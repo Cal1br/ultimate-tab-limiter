@@ -1,5 +1,6 @@
-// Load and display settings
-async function loadSettings() {
+import { getBrowser, getConfig, getOptions } from './utils.js';
+
+document.addEventListener('DOMContentLoaded', async () => {
   const config = await getConfig();
   const userOptions = await getOptions();
 
@@ -14,19 +15,7 @@ async function loadSettings() {
     li.appendChild(getRemoveButton(li, config, index));
     list.appendChild(li);
   });
-}
-
-document.addEventListener('DOMContentLoaded', loadSettings);
-
-async function getConfig() {
-  const result = await browser.storage.local.get('userConfig');
-  return result.userConfig || { entries: [] };
-}
-
-async function getOptions() {
-  const result = await browser.storage.local.get('userOptions');
-  return result.userOptions || { closeNewTabsToggle: true };
-}
+});
 
 // Add new domain-number entry
 document.querySelector('#addEntryBtn').addEventListener('click', async () => {
@@ -41,7 +30,7 @@ document.querySelector('#addEntryBtn').addEventListener('click', async () => {
   const config = await getConfig();
   config.entries.push({ domain, number });
 
-  await browser.storage.local.set({ userConfig: config });
+  await getBrowser().storage.local.set({ userConfig: config });
 
   document.querySelector('#domain').value = '';
   document.querySelector('#number').value = '';
@@ -68,13 +57,12 @@ function getRemoveButton(element, config, index) {
   removeBtn.addEventListener('click', async (e) => {
     e.stopPropagation();
     config.entries.splice(index, 1);
-    await browser.storage.local.set({ userConfig: config });
+    await getBrowser().storage.local.set({ userConfig: config });
 
     element.classList.add('undertale-death');
 
     setTimeout(() => {
       element.remove();
-      if (callback) callback();
     }, 250);
   });
   return removeBtn;
@@ -87,5 +75,5 @@ document
 
     userOptions.closeNewTabsToggle = event.target.checked;
 
-    await browser.storage.local.set({ userOptions: userOptions });
+    await getBrowser().storage.local.set({ userOptions: userOptions });
   });
